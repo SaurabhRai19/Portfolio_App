@@ -16,7 +16,6 @@ def load_css(file_name):
 
 load_css("styles.css")
 
-
 # ------------------ SIDEBAR ------------------
 with st.sidebar:
     selected = option_menu(
@@ -26,10 +25,9 @@ with st.sidebar:
         default_index=0
     )
 
-
 # ------------------ PROJECT COMPONENT ------------------
 def project_section(title, desc, link, tags, image=None, architecture=None, caption=None):
-    
+
     with st.container():
 
         tag_html = "".join([f'<span class="tag">{t}</span>' for t in tags])
@@ -42,7 +40,6 @@ def project_section(title, desc, link, tags, image=None, architecture=None, capt
         </div>
         """, unsafe_allow_html=True)
 
-        # ✅ FIXED IMAGE (no warning)
         if image and os.path.exists(image):
             col1, col2, col3 = st.columns([1, 5, 1])
             with col2:
@@ -57,7 +54,6 @@ If it’s sleeping, click **“Yes, get this app back up!”** and wait a few se
 
         st.link_button("🚀 Open App", link)
 
-        # ✅ FIXED ARCHITECTURE IMAGE
         if architecture and os.path.exists(architecture):
             with st.expander("⚙️ View Architecture"):
                 col1, col2, col3 = st.columns([1, 5, 1])
@@ -67,7 +63,6 @@ If it’s sleeping, click **“Yes, get this app back up!”** and wait a few se
                     st.caption(caption)
 
         st.markdown("---")
-
 
 # ------------------ HOME ------------------
 if selected == "Home":
@@ -87,17 +82,28 @@ I build intelligent systems combining **Machine Learning (prediction)** and
 - RAG-based AI applications  
 - Agentic AI systems  
 - ML models for prediction & segmentation  
-- End-to-end AI solutions on cloud  
+- End-to-end AI systems using microservices  
+
+---
+
+### 🏦 Featured System
+
+Built an AI-powered **Loan Underwriting & Fraud Detection platform** using microservices architecture.
+
+✔ Document Intelligence (PDF processing)  
+✔ Fraud Detection & Risk Scoring  
+✔ Cross-document validation  
+✔ Explainable AI decisions  
+✔ Analytics Dashboard  
 
 ---
 
 ### 🧠 How I build AI systems:
-- **ML →** embeddings, prediction, ranking  
-- **GenAI →** reasoning, generation, decision making  
+- **ML →** embeddings, prediction, scoring  
+- **GenAI →** reasoning, decisioning, explanation  
 
 This hybrid approach enables scalable, production-ready AI systems.
 """)
-
 
 # ------------------ PROJECTS ------------------
 elif selected == "Projects":
@@ -107,11 +113,32 @@ elif selected == "Projects":
     with col2:
         st.header("🚀 Projects")
 
+        # 🌟 FLAGSHIP
+        st.markdown("## 🌟 Flagship Project")
+
+        project_section(
+            "🏦 AI Loan Underwriting & Fraud Detection System",
+            """End-to-end AI decisioning system combining structured applicant data and unstructured documents. 
+Processes salary slips and bank statements, performs cross-document validation, detects fraud signals, 
+and generates explainable loan decisions with a full analytics dashboard.
+
+Simulates real-world loan origination systems used by banks and fintech platforms.""",
+            "http://localhost:8501",  # change if deployed
+            [
+                "Microservices", "FastAPI", "LLM", "GenAI",
+                "Fraud Detection", "Underwriting", "Docker",
+                "Analytics Dashboard", "Document AI"
+            ],
+            image="assets/loan_ai_app.png",
+            architecture="assets/loan_ai_architecture.png",
+            caption="UI → API Gateway → Document Service → LLM → Risk Engine → Fraud + Underwriting → DB → Analytics Dashboard"
+        )
+
         st.subheader("🤖 GenAI Systems")
 
         project_section(
             "Medical Assistance App",
-            "RAG-based chatbot providing context-aware medical responses using LLM + vector database.",
+            "Built a production-style RAG system using LLMs and vector search for context-aware medical responses.",
             "https://medical-assistance-app-srgenaiprojects.streamlit.app",
             ["RAG", "LLM", "LangChain", "Vector DB"],
             image="assets/medical_assistance_app.png",
@@ -161,7 +188,6 @@ elif selected == "Projects":
             image="assets/client_categorizer_app.png"
         )
 
-
 # ------------------ SKILLS ------------------
 elif selected == "Skills":
 
@@ -186,12 +212,13 @@ elif selected == "Skills":
 - Python  
 - FastAPI  
 - Streamlit  
+- Docker  
+- Microservices Architecture  
 
 ### ☁️ Cloud
 - GCP  
 - Azure  
 """)
-
 
 # ------------------ EXPERIENCE ------------------
 elif selected == "Experience":
@@ -209,7 +236,6 @@ elif selected == "Experience":
 - Worked on enterprise use cases and solution architecture  
 - Delivered end-to-end AI workflows for clients  
 """)
-
 
 # ------------------ CONTACT ------------------
 elif selected == "Contact":
