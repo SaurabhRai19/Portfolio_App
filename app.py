@@ -16,6 +16,22 @@ def load_css(file_name):
 
 load_css("styles.css")
 
+# ------------------ IMPROVE SIDEBAR BUTTON VISIBILITY ------------------
+st.markdown("""
+<style>
+[data-testid="collapsedControl"] {
+    background-color: #2563eb !important;
+    border-radius: 50%;
+    padding: 6px;
+    transform: scale(1.3);
+}
+
+[data-testid="collapsedControl"]:hover {
+    background-color: #3b82f6 !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # ------------------ SIDEBAR ------------------
 with st.sidebar:
     selected = option_menu(
@@ -26,7 +42,7 @@ with st.sidebar:
     )
 
 # ------------------ PROJECT COMPONENT ------------------
-def project_section(title, desc, link, tags, image=None, architecture=None, caption=None):
+def project_section(title, desc, link, tags, image=None, architecture=None, caption=None, is_local=False):
 
     with st.container():
 
@@ -45,14 +61,18 @@ def project_section(title, desc, link, tags, image=None, architecture=None, capt
             with col2:
                 st.image(image, width="stretch")
 
-        st.info("⚠️ App may take **20–30 seconds to wake up** if inactive (Streamlit free tier).")
+        # 🔥 CONDITIONAL UI
+        if is_local:
+            st.success("💻 This system is fully built and runs locally. Available for demo on request.")
+        else:
+            st.info("⚠️ App may take **20–30 seconds to wake up** if inactive (Streamlit free tier).")
 
-        st.markdown("""
+            st.markdown("""
 👉 Click below to open the app.  
 If it’s sleeping, click **“Yes, get this app back up!”** and wait a few seconds.
 """)
 
-        st.link_button("🚀 Open App", link)
+            st.link_button("🚀 Open App", link)
 
         if architecture and os.path.exists(architecture):
             with st.expander("⚙️ View Architecture"):
@@ -70,7 +90,7 @@ if selected == "Home":
     col1, col2, col3 = st.columns([1, 4, 1])
 
     with col2:
-        st.title("🤖 AI Engineer | GenAI + ML Systems")
+        st.title("AI Engineer | GenAI + ML Systems")
 
         st.markdown("""
 I build intelligent systems combining **Machine Learning (prediction)** and  
@@ -82,27 +102,30 @@ I build intelligent systems combining **Machine Learning (prediction)** and
 - RAG-based AI applications  
 - Agentic AI systems  
 - ML models for prediction & segmentation  
-- End-to-end AI systems using microservices  
+- End-to-end AI solutions on using microservices and cloud platforms 
 
 ---
 
 ### 🏦 Featured System
 
-Built an AI-powered **Loan Underwriting & Fraud Detection platform** using microservices architecture.
-
-✔ Document Intelligence (PDF processing)  
-✔ Fraud Detection & Risk Scoring  
-✔ Cross-document validation  
-✔ Explainable AI decisions  
-✔ Analytics Dashboard  
+Built an AI-powered **Loan Underwriting & Fraud Detection system** using microservices, document intelligence, and explainable AI. Designed for real-world production use with a focus on scalability, reliability, and actionable insights.
 
 ---
+### 🏆 Projects
 
-### 🧠 How I build AI systems:
-- **ML →** embeddings, prediction, scoring  
-- **GenAI →** reasoning, decisioning, explanation  
+- **GenAI Systems →** RAG chatbot, agentic research assistant
+- **ML Systems →** book recommendation, car price prediction, health risk estimation, customer segmentation
+- **End-to-end AI →** combining GenAI + ML for real-world applications like loan underwriting and fraud detection
+- **Cloud & Tools →** Vertex AI, FastAPI, Docker, microservices architecture for scalable AI solutions
+---
 
-This hybrid approach enables scalable, production-ready AI systems.
+                    
+### 🧠 My AI Architecture Philosophy:
+- **ML Foundation →** embeddings, prediction, ranking, feature engineering  
+- **GenAI Integration →** reasoning, generation, decision making, multi-agent orchestration  
+- **Systems Design →** scalability, reliability, observability, cost optimization  
+
+This hybrid approach delivers enterprise-grade, production-hardened AI systems.
 """)
 
 # ------------------ PROJECTS ------------------
@@ -113,32 +136,25 @@ elif selected == "Projects":
     with col2:
         st.header("🚀 Projects")
 
-        # 🌟 FLAGSHIP
-        st.markdown("## 🌟 Flagship Project")
+        # 🔥 FLAGSHIP PROJECT
+        st.subheader("🌟 Featured System")
 
         project_section(
             "🏦 AI Loan Underwriting & Fraud Detection System",
-            """End-to-end AI decisioning system combining structured applicant data and unstructured documents. 
-Processes salary slips and bank statements, performs cross-document validation, detects fraud signals, 
-and generates explainable loan decisions with a full analytics dashboard.
-
-Simulates real-world loan origination systems used by banks and fintech platforms.""",
-            "http://localhost:8501",  # change if deployed
-            [
-                "Microservices", "FastAPI", "LLM", "GenAI",
-                "Fraud Detection", "Underwriting", "Docker",
-                "Analytics Dashboard", "Document AI"
-            ],
+            "End-to-end AI decisioning system combining document intelligence, underwriting logic, and fraud detection with explainable AI and analytics dashboard.",
+            "",
+            ["Microservices", "FastAPI", "LLM", "Docker", "Fraud Detection", "Analytics"],
             image="assets/loan_ai_app.png",
             architecture="assets/loan_ai_architecture.png",
-            caption="UI → API Gateway → Document Service → LLM → Risk Engine → Fraud + Underwriting → DB → Analytics Dashboard"
+            caption="UI → API Gateway → Document Service → LLM → Risk Engine → Fraud + Underwriting → DB → Analytics",
+            is_local=True
         )
 
         st.subheader("🤖 GenAI Systems")
 
         project_section(
             "Medical Assistance App",
-            "Built a production-style RAG system using LLMs and vector search for context-aware medical responses.",
+            "RAG-based chatbot providing context-aware medical responses using LLM + vector database.",
             "https://medical-assistance-app-srgenaiprojects.streamlit.app",
             ["RAG", "LLM", "LangChain", "Vector DB"],
             image="assets/medical_assistance_app.png",
@@ -200,12 +216,12 @@ elif selected == "Skills":
 ### 🤖 Generative AI
 - Vertex AI  
 - LangChain  
-- RAG (Retrieval Augmented Generation)  
+- RAG  
 - Agentic AI  
 
 ### 📊 Machine Learning
 - Regression  
-- Clustering (K-Means)  
+- Clustering  
 - Recommendation Systems  
 
 ### 🛠 Backend & Tools
@@ -232,7 +248,7 @@ elif selected == "Experience":
 ### AI Cloud Presales Engineer
 
 - Designed and demonstrated GenAI and ML solutions  
-- Built real-world AI applications using Vertex AI, LangChain  
+- Built real-world AI systems using Vertex AI, LangChain  
 - Worked on enterprise use cases and solution architecture  
 - Delivered end-to-end AI workflows for clients  
 """)
